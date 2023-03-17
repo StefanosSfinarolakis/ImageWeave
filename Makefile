@@ -4,7 +4,7 @@
 # Set up virtual environment
 venv:
 	@echo "Creating virtual environment..."
-	python3 -m venv venv
+	python3.9 -m venv venv
 	@echo "Virtual environment created."
 
 # Activate virtual environment
