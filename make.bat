@@ -23,6 +23,11 @@ if "%1" == "activate" (
     %PYTHON% -m venv %VENV_NAME%
     .\%VENV_NAME%\Scripts\activate
     pip install --upgrade pip
+) else if "%1" == "run" (
+    .\%VENV_NAME%\Scripts\activate
+    start "Django Server" /B cmd /C "python manage.py runserver"
+) else if "%1" == "stop" (
+    taskkill /IM "python.exe" /FI "WINDOWTITLE eq Django Server*"
 ) else (
     echo Usage: venv.bat [command]
     echo.
@@ -33,6 +38,8 @@ if "%1" == "activate" (
     echo   update        Update requirements.txt with latest package versions
     echo   clean         Delete virtual environment
     echo   setup         Create virtual environment with Python 3.9 and install pip
+    echo   run           Run Django server in the background
+    echo   stop          Stop Django server
 )
 
 endlocal
