@@ -44,6 +44,8 @@ if [%1]==[clean] goto :Clean
 if [%1]==[start] goto :StartServer
 if [%1]==[stop] goto :StopServer
 if [%1]==[restart] goto :RestartServer
+if [%1]==[migrate] goto :Migrate
+
 goto :Help
 
 :Install
@@ -116,6 +118,11 @@ call %VENV_NAME%\Scripts\activate.bat
 docker-compose -f %DOCKER_COMPOSE% restart
 goto :End
 
+:Migrate
+echo Running Django migrations...
+call %VENV_NAME%\Scripts\activate.bat
+python manage.py migrate
+echo Migrations complete.
+goto :End
+
 :End
-
-
