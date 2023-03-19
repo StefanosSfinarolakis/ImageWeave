@@ -1,46 +1,121 @@
 @echo off
-setlocal
 
-SET PYTHON=python3.9
-SET VENV_NAME=venv
+REM Define variables
+set VENV_NAME=env
+set REQUIREMENTS=requirements.txt
+set DOCKER_COMPOSE=docker-compose.yml
 
-if "%1" == "activate" (
-    .\%VENV_NAME%\Scripts\activate
-) else if "%1" == "install" (
-    .\%VENV_NAME%\Scripts\activate
-    pip install -r requirements.txt
-) else if "%1" == "add" (
-    .\%VENV_NAME%\Scripts\activate
-    set /p package="Enter package name (e.g. django==3.2.9): "
-    pip install %package%
-    pip freeze > requirements.txt
-) else if "%1" == "update" (
-    .\%VENV_NAME%\Scripts\activate
-    pip freeze --exclude-editable > requirements.txt
-) else if "%1" == "clean" (
-    rmdir /s /q %VENV_NAME%
-) else if "%1" == "setup" (
-    %PYTHON% -m venv %VENV_NAME%
-    .\%VENV_NAME%\Scripts\activate
-    pip install --upgrade pip
-) else if "%1" == "run" (
-    .\%VENV_NAME%\Scripts\activate
-    start "Django Server" /B cmd /C "python manage.py runserver"
-) else if "%1" == "stop" (
-    taskkill /IM "python.exe" /FI "WINDOWTITLE eq Django Server*"
-) else (
-    echo Usage: venv.bat [command]
-    echo.
-    echo Commands:
-    echo   activate      Activate virtual environment
-    echo   install       Install dependencies from requirements.txt
-    echo   add           Add a package to requirements.txt
-    echo   update        Update requirements.txt with latest package versions
-    echo   clean         Delete virtual environment
-    echo   setup         Create virtual environment with Python 3.9 and install pip
-    echo   run           Run Django server in the background
-    echo   stop          Stop Django server
-)
+REM Display help message
+if [%1]==[/?] goto :Help
+if [%1]==[--help] goto :Help
+goto :Start
 
-endlocal
+:Help
+echo Usage: make [COMMAND]
+echo.
+echo Commands:
+echo   install         Installs dependencies
+echo   setup           Sets up a new virtual environment and activates it
+echo   update          Updates the virtual environment and requirements
+echo   add             Adds new dependency to requirements.txt
+echo   clean           Cleans the virtual environment and removes Docker containers
+echo   start           Starts the Django server
+echo   stop            Stops the Django server
+echo   restart         Restarts the Django server
+echo.
+echo Example usage:
+echo   make install
+echo   make setup
+echo   make start
+echo   make stop
+echo   make restart
+echo.
+goto :End
+
+:Start
+REM Check command
+if [%1]==[] goto :Help
+if [%1]==[install] goto :Install
+if [%1]==[activate] goto :Activate
+if [%1]==[setup] goto :Setup
+if [%1]==[update] goto :Update
+if [%1]==[add] goto :AddDependency
+if [%1]==[clean] goto :Clean
+if [%1]==[start] goto :StartServer
+if [%1]==[stop] goto :StopServer
+if [%1]==[restart] goto :RestartServer
+goto :Help
+
+:Install
+echo Installing dependencies...
+python -m venv %VENV_NAME%
+call %VENV_NAME%\Scripts\activate.bat
+pip install -r %REQUIREMENTS%
+echo Install complete.
+goto :End
+
+:Activate
+call %VENV_NAME%\Scripts\activate.bat
+echo Venv Activated.
+goto :End
+
+:Setup
+echo Setting up virtual environment...
+python -m venv %VENV_NAME%
+call %VENV_NAME%\Scripts\activate.bat
+echo Setup complete.
+goto :End
+
+:Update
+echo Updating virtual environment...
+call %VENV_NAME%\Scripts\activate.bat
+pip install -r %REQUIREMENTS%
+echo Update complete.
+goto :End
+
+:AddDependency
+if [%2]==[] goto :HelpAdd
+echo Adding dependency %2 to requirements.txt...
+echo %2 >> %REQUIREMENTS%
+echo Dependency added.
+goto :End
+
+:HelpAdd
+echo Usage: make add [DEPENDENCY]
+echo.
+echo Example usage:
+echo   make add django
+echo   make add requests
+echo.
+goto :End
+
+:Clean
+echo Cleaning virtual environment and Docker containers...
+call %VENV_NAME%\Scripts\deactivate.bat
+rmdir /s /q %VENV_NAME%
+docker-compose -f %DOCKER_COMPOSE% down
+echo Clean complete.
+goto :End
+
+:StartServer
+echo Starting Django server...
+call %VENV_NAME%\Scripts\activate.bat
+docker-compose -f %DOCKER_COMPOSE% up -d
+python manage.py runserver
+goto :End
+
+:StopServer
+echo Stopping Django server...
+call %VENV_NAME%\Scripts\activate.bat
+docker-compose -f %DOCKER_COMPOSE% down
+goto :End
+
+:RestartServer
+echo Restarting Django server...
+call %VENV_NAME%\Scripts\activate.bat
+docker-compose -f %DOCKER_COMPOSE% restart
+goto :End
+
+:End
+
 
