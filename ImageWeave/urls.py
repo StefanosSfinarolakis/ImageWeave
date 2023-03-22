@@ -22,5 +22,6 @@ urlpatterns = [
     # PYxelCollective apps urls
     path('', include('textureGen.urls')),
     path('', include('account.urls')),
+    path('', include('post.urls')),
     
 ]
