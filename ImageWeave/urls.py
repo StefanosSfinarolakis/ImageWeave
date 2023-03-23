@@ -20,8 +20,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # PYxelCollective apps urls
-    path('', include('textureGen.urls')),
-    path('', include('account.urls')),
+    path('textureGen', include('textureGen.urls')),
+    path('signup', include('account.urls')),
     path('', include('post.urls')),
     
 ]
