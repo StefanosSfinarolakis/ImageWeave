@@ -14,8 +14,8 @@ class Profile(models.Model):
     id_user = models.IntegerField()
     profielimg = models.ImageField(upload_to='profile_images', default = 'blank_profile_picture.png')
 
-#    def __str__(self):
-#       return self.user.username
+    def __str__(self):
+      return self.user.username
 
 
 
