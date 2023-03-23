@@ -47,7 +47,7 @@ def signup(request):
                 user_login = auth.authenticate(usename=username, password=password)
                 auth.login(request, user_login)
                 #create a Profile object for the new user
-                user_model = User.onjects.get(username=user)
+                user_model = User.objects.get(username=user)
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
                 return redirect('settings')   
