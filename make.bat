@@ -45,7 +45,7 @@ if [%1]==[start] goto :StartServer
 if [%1]==[stop] goto :StopServer
 if [%1]==[restart] goto :RestartServer
 if [%1]==[migrate] goto :Migrate
-
+if [%1]==[migrations] goto :Makemigrations
 goto :Help
 
 :Install
@@ -124,5 +124,10 @@ call %VENV_NAME%\Scripts\activate.bat
 python manage.py migrate
 echo Migrations complete.
 goto :End
+
+:Makemigrations
+python manage.py makemigrations
+echo new migration created
+goto:End
 
 :End
