@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     
     # PYxelCollective Apps
     
-    'textureGen',
     'personal',
     'account',
     'post',
