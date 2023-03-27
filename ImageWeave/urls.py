@@ -24,8 +24,8 @@ urlpatterns = [
 
     # PYxelCollective apps urls
     
-    path('accounts/', include('account.urls')),
-    path('', include('post.urls')),
+    path('', include('account.urls')),
+    path('home/', include('post.urls')),
     
 ]
 
