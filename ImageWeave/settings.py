@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     
     # PYxelCollective Apps
     
-    'personal',
+    'social',
     'account',
     'post',
 
