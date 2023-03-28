@@ -8,6 +8,9 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import Profile
 from django.contrib.auth.decorators import login_required
+from itertools import chain
+import random
+
 
 #if user is not loged in/ logged out
 @login_required(login_url='signin')
@@ -17,12 +20,26 @@ def index(request):
     return render(request, 'index.html')
 
 
-#den einai etoimo
+
 @login_required(login_url='signin')
 #accountsettings 
 def settings(request):
    user_profile = Profile.objects.get(user=request.user)
-   return render(request, 'setting.html', {'user_profile': user_profile})
+
+   if request.method == "POST":
+       
+       if request.FILES.get('image') == None:
+        image = user_profile.profielimg
+        user_profile.profielimg = image
+        user_profile.save()
+       if request.FILES.get('image') != None:
+           image = request.FILES.get('image')
+           user_profile.profielimg = image
+           user_profile.save()
+       return redirect('settings')   
+           
+   return render(request, 'setting.html',{'user_profile': user_profile})
+
 
 #signup
 def signup(request):
@@ -69,7 +86,7 @@ def signin(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('/')
+            return redirect('home')
         else:
             messages.info(request, 'Username or Password is incorrect')
             return redirect('signin')    
