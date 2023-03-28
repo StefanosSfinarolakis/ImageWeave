@@ -82,5 +82,8 @@ def logout(request):
     auth.logout(request)
     return redirect('signin')
 
-def trending(request):
-    return render(request , 'trending.html')
+def startpage(request):
+    return render(request , 'startpage.html')
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
