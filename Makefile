@@ -1,6 +1,13 @@
 
 # Makefile for setting up and managing virtual environment, and running a Django application using Docker and Docker Compose
 
+# Starts Vitual Enviroment
+start:
+	@echo "Starting Virtual Enviroment"
+	. venv/bin/activate
+	python manage.py runserver
+	@echo "Server is now Running"
+
 # Set up virtual environment
 venv:
 	@echo "Creating virtual environment..."
