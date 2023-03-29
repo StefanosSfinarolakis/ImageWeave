@@ -43,7 +43,7 @@
                     </div>
                     <div class="bg-white rounded-md lg:shadow-lg shadow col-span-2">
                        <form action="" method="POST" enctype="multipart/form-data">
-                            {% crsf_token %}    
+                            {% csrf_token %}    
                        <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
                            <div>
                                <label for=""> First name</label>
@@ -60,7 +60,7 @@
                             <div class="col-span-2">
                             <label for=""> Profile Image</label>
                             <img width="100" height="100" src="{{user_profile.profileimg.url}}" />
-                            <input type="file" value="{{user_profile.profileimg}}" class="shadow-none bg-gray-100">
+                            <input type="file" value="{{user_profile.profileimg}}" name="image" class="shadow-none bg-gray-100">
                             </div>
                             <div>
                                <label for=""> Working at</label>

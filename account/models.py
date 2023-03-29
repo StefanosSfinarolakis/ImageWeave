@@ -4,7 +4,7 @@ from django.db import models
 
 ##LIB##
 from django.contrib.auth import get_user_model
-
+import uuid
 
 User = get_user_model()
 
@@ -12,7 +12,7 @@ User = get_user_model()
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()
-    profielimg = models.ImageField(upload_to='profile_images', default = 'blank_profile_picture.png')
+    profileimg = models.ImageField(upload_to='profile_images', default = 'blank_profile_picture.png')
 
     def __str__(self):
       return self.user.username

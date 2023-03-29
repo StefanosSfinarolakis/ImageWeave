@@ -6,7 +6,7 @@ from django.shortcuts import render ,redirect
 from django.http import  HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Profile
+from account.models import Profile
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
@@ -29,19 +29,19 @@ def settings(request):
    if request.method == "POST":
        
        if request.FILES.get('image') == None:
-        image = user_profile.profielimg
-        user_profile.profielimg = image
+        image = user_profile.profileimg
+        user_profile.profileimg = image
         user_profile.save()
        if request.FILES.get('image') != None:
            image = request.FILES.get('image')
-           user_profile.profielimg = image
+           user_profile.profileimg = image
            user_profile.save()
-       return redirect('settings')   
-           
-   return render(request, 'setting.html',{'user_profile': user_profile})
+       return redirect('settings')              
+   return render(request, 'settings.html',{'user_profile': user_profile})
 
 
 #signup
+@login_required(login_url='signin')
 def signup(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -67,7 +67,7 @@ def signup(request):
                 user_model = User.objects.get(username=user)
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
-                return redirect('settings')   
+                return redirect('/home/')   
         else:
             messages.info(request, 'Password Not Matching')
             return redirect('signup')
@@ -86,7 +86,7 @@ def signin(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('home')
+            return redirect('/home/')
         else:
             messages.info(request, 'Username or Password is incorrect')
             return redirect('signin')    
