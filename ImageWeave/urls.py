@@ -26,6 +26,7 @@ urlpatterns = [
     
     path('', include('account.urls')),
     path('home/', include('post.urls')),
+    path('profile/', include('social.urls')),
     
 ]
 
