@@ -104,5 +104,5 @@ def startpage(request):
 def aboutus(request):
     return render(request, 'aboutus.html')
 
-def homepage(request):
-    return render(request, 'homepage.html')
+def testpage(request):
+    return render(request, 'testpage.html')
