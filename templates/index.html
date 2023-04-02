@@ -15,7 +15,7 @@
                     background-color: #f1f1f1;
               margin: 0;
               padding: 0;
-              background-image: url('static/assets/images/backround2.jpg');
+              background-image: url('../static/assets/images/backround2.jpg');
               background-position: center;
               background-repeat: no-repeat;
               background-size: fill;
@@ -84,20 +84,13 @@
             nav a:hover {
             color: #d61010;
             }
-
-            list {
-                background-color: white;
-                margin: 0;
-                text-align: center:
-                border-ratio: 10px;
-                border-color: white;
-            }
-            
+     
             .leftcolumn {
                 float: left;
                 width: 30%;
                 padding: 10px;
                 background-color: trans;
+                margin-right: auto;
               }
 
               .rightcolumn {
@@ -107,12 +100,6 @@
                 background-color: trans;
               }
               
-              .end {
-                text-align: center;
-                width: auto;
-                padding: 10px;
-                background-color: blue;
-              }
 
               article {
                 background-color: #d48e8e38;
@@ -139,6 +126,7 @@
 
               form img {
                 max-width: 100%;
+                display: center;
               }
 
               .round-pic {
@@ -159,7 +147,7 @@
             </header>
                     <nav>
                         <a href="#">Gallery</a>
-                        <a href="/profile/<str:pk>">Profile</a>
+                        <a href="/profile/{{user}}">Profile</a>
                         <a href="upload">Upload</a>
                         <a href="../settings">Settings</a>
                         <a href="../signin">Log out</a>
@@ -171,10 +159,10 @@
                             <hr>
                             <h1>
                             <div class=round-pic>
-                            <img src={{profileimg}}>
+                            <img src=/media/{{profileimg}}>
                             </div>
                             <form>
-                            <h1><a href="/profile/<str:pk>"> {{user}} </a></h1>
+                            <h1><a href="/profile/{{user}}"> {{user}} </a></h1>
                     </form>
                         </article>
                         <article>
@@ -209,7 +197,7 @@
                             <form>
                                 <h2>{{user}} Uploaded:</h2>
                                 <hr>
-                                <img src={{profileimg}}>
+                                <img src="/media/profile_images/arch.jpg">
                                 <p>My life as an arch linux user!! I love my life.. and burgers!</p>
                             </form>
                         </div>
