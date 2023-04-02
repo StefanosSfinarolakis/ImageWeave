@@ -10,4 +10,5 @@ path('signup', views.signup, name='signup'),
 path('signin', views.signin, name='signin'),
 path('logout', views.logout, name='logout'),
 path('aboutus', views.aboutus, name='aboutus'),
+path('homepage', views.homepage, name='homepage')
 ]
