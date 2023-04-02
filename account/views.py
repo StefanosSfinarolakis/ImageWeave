@@ -103,6 +103,3 @@ def startpage(request):
 
 def aboutus(request):
     return render(request, 'aboutus.html')
-
-def testpage(request):
-    return render(request, 'testpage.html')
