@@ -41,7 +41,6 @@ def settings(request):
 
 
 #signup
-@login_required(login_url='signin')
 def signup(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -61,10 +60,10 @@ def signup(request):
                 user.save()
 
                 #log user in and redirect to settings page
-                user_login = auth.authenticate(usename=username, password=password)
+                user_login = auth.authenticate(username=username, password=password)
                 auth.login(request, user_login)
                 #create a Profile object for the new user
-                user_model = User.objects.get(username=user)
+                user_model = User.objects.get(username=username)
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
                 return redirect('/home/')   
